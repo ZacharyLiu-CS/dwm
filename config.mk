@@ -6,10 +6,10 @@ VERSION = 6.2
 # paths
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
+SCRIPTS = ~
 
 X11INC = /usr/include/X11
 X11LIB = /usr/lib/X11
-
 # Xinerama, comment if you don't want it
 XINERAMALIBS  = -lXinerama
 XINERAMAFLAGS = -DXINERAMA
