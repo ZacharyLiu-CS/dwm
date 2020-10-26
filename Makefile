@@ -37,7 +37,8 @@ dist: clean
 	rm -rf dwm-${VERSION}
 
 install: all
-	cp -r dwm_scripts ${SCRIPTS}/.dwm_scripts
+	mkdir -p {SCRIPTS}
+	cp -r dwm_scripts/* ${SCRIPTS}/.dwm_scripts
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	cp -f dwm ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
