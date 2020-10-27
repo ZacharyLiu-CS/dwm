@@ -10,7 +10,8 @@
 LOC=$(readlink -f "$0")
 DIR=$(dirname "$LOC")
 export IDENTIFIER="unicode"
-FLASH_RATE=2
+# define the flash rate of this script
+FLASH_RATE=1
 
 print_volume() {
 	volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"

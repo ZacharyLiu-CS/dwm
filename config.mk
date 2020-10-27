@@ -6,7 +6,7 @@ VERSION = 6.2
 # paths
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
-SCRIPTS = ~
+SCRIPTS = /home/zach/.dwm_scripts
 
 X11INC = /usr/include/X11
 X11LIB = /usr/lib/X11
