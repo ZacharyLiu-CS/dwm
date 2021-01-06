@@ -98,11 +98,12 @@ dwm_alsa () {
 function get_bytes {
   # Find active network interface
   interface=$(ip route get 8.8.8.8 2>/dev/null| grep -Eo 'dev.*'|awk '{print $2}')
-  if [ $1 == "recv" ];
-  then
-    line=$(grep $interface /proc/net/dev | awk '{print $2}')
-  else
-    line=$(grep $interface /proc/net/dev | awk '{print $10}')
+  if [ -n "$interface" ];then
+    if [ $1 = "recv" ];then
+        line=$(grep $interface /proc/net/dev | awk '{print $2}')
+    else
+        line=$(grep $interface /proc/net/dev | awk '{print $10}')
+    fi
   fi
   echo $line
 }
@@ -122,9 +123,6 @@ function calculate_velocity {
   if test "$velKB" -gt 1024
   then
     echo $(echo "scale=2; $velKB/1024" | bc)MB/s
-
-
-
   else
     echo ${velKB}KB/s
   fi
@@ -136,18 +134,25 @@ function network_speed {
   then
     vel_recv=$(calculate_velocity $now_bytes_recv  $old_bytes_recv)
     vel_trans=$(calculate_velocity $now_bytes_trans  $old_bytes_trans)
+  else
+    vel_recv=""
+    vel_trans=""
   fi
   old_bytes_recv=$now_bytes_recv
   old_bytes_trans=$now_bytes_trans
-  vel_recv=$(printf "⬇%-8s" $vel_recv)
-  vel_trans=$(printf "⬆%-8s" $vel_trans )
-
+  if [ -n "$vel_recv" ]&&[ -n "$vel_trans" ];then
+    vel_recv_str=$(printf "⬇%-8s" $vel_recv)
+    vel_trans_str=$(printf "⬆%-8s" $vel_trans )
+  else
+    vel_recv_str="No Network!"
+    vel_trans_str=""
+  fi
 }
 while true
 do
   network_speed
-  xsetroot -name "$vel_recv $vel_trans 🌡$(print_temp) 💿 $(print_mem)M $(dwm_alsa) [ $(print_bat) ] $(print_date) "
-
+  xsetroot -name "$vel_recv_str $vel_trans_str 🌡$(print_temp) 💿 $(print_mem)M $(dwm_alsa) [ $(print_bat) ] $(print_date) "
+  echo "$vel_recv_str $vel_trans_str 🌡$(print_temp) 💿 $(print_mem)M $(dwm_alsa) [ $(print_bat) ] $(print_date) ">> ~/log
   sleep $FLASH_RATE
 done
 
