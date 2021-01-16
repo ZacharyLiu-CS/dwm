@@ -152,7 +152,6 @@ while true
 do
   network_speed
   xsetroot -name "$vel_recv_str $vel_trans_str 🌡$(print_temp) 💿 $(print_mem)M $(dwm_alsa) [ $(print_bat) ] $(print_date) "
-  echo "$vel_recv_str $vel_trans_str 🌡$(print_temp) 💿 $(print_mem)M $(dwm_alsa) [ $(print_bat) ] $(print_date) ">> ~/log
   sleep $FLASH_RATE
 done
 
